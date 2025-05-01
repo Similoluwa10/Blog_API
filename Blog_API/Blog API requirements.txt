@@ -1,0 +1,23 @@
+Blog API
+
+Signup, login and authentication, log out
+
+Functionality - 
+Default:
+View blogs
+
+When logged in: 
+Post a blog
+Edit your own blog
+Comment on blogs
+
+
+
+Models - 
+
+BlogPost
+
+UserBlogs
+
+OtherBlogs
+
