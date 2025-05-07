@@ -10,6 +10,8 @@ namespace Blog_API.Context
         {
 
         }
+
         public DbSet<BlogPostModel> BlogPostTable { get; set; }
+        public DbSet<UserModel> UserTable { get; set; }
     }
 }
