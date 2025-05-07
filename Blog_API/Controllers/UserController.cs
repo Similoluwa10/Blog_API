@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Blog_API.Models;
 using Blog_API.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog_API.Controllers
 {
@@ -24,11 +26,24 @@ namespace Blog_API.Controllers
             return Ok(user);
         }
 
-        //[HttpGet]
-        //public async Task<IEnumerable> GetAllUsers()
-        //{
-        //    await return _context.UserTable.ToList();
-        //}
+        [HttpGet]
+        [Authorize(Roles = "Admin")] // Example of role-based access - requires additional setup
+        public async Task<ActionResult<IEnumerable<UserModel>>> GetAllUsers()
+        {
+            return await _context.UserTable.ToListAsync();
+        }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<UserModel>> GetUserById(int id)
+        {
+            var user = await _context.UserTable.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            return user;
+        }
     }
 }

@@ -41,12 +41,9 @@ namespace Blog_API.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UserModelId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserModelId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("BlogPostTable");
                 });
@@ -82,9 +79,13 @@ namespace Blog_API.Migrations
 
             modelBuilder.Entity("Blog_API.Models.BlogPostModel", b =>
                 {
-                    b.HasOne("Blog_API.Models.UserModel", null)
+                    b.HasOne("Blog_API.Models.UserModel", "User")
                         .WithMany("BlogPosts")
-                        .HasForeignKey("UserModelId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Blog_API.Models.UserModel", b =>

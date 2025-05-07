@@ -1,6 +1,6 @@
-﻿
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Blog_API.Models
 {
@@ -24,8 +24,8 @@ namespace Blog_API.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
         
-        private ICollection<BlogPostModel> BlogPosts { get; set; }    
-        
-
+        // Navigation property to BlogPosts - must be public
+        [JsonIgnore]
+        public ICollection<BlogPostModel> BlogPosts { get; set; } = new List<BlogPostModel>();
     }
 }
