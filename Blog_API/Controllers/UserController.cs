@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Blog_API.Models;
 using Blog_API.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Blog_API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -16,19 +18,19 @@ namespace Blog_API.Controllers
             _context = context;
         }
 
-        [HttpPost]
-        public async Task<ActionResult> CreateUser([FromBody] UserModel user)
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        public async Task<IEnumerable<UserModel>> GetAllUsers()
         {
-            _context.UserTable.Add(user);
-            await _context.SaveChangesAsync();
-            return Ok(user);
+            return await _context.UserTable.ToListAsync();
         }
 
-        //[HttpGet]
-        //public async Task<IEnumerable> GetAllUsers()
-        //{
-        //    await return _context.UserTable.ToList();
-        //}
+        [HttpGet("{id}")]
+        [Authorize(Roles = "User")]
+        public async Task<ActionResult<UserModel>> GetUserById(int id)
+        {
+            return await _context.UserTable.FirstOrDefaultAsync(t => t.Id == id);
+        }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Blog_API.Models
 {
@@ -15,11 +16,10 @@ namespace Blog_API.Models
         [Required]
         public string Content { get; set; }
 
-        //[Required]
-        //[MaxLength(20)]
-        //public string Author { get; set; }
+        [JsonIgnore]
+        public int UserId { get; set; }
 
-        private int UserId { get; set; }
-        private UserModel User { get; set; }
+        [JsonIgnore]
+        public UserModel? User { get; set; }
     }
 }

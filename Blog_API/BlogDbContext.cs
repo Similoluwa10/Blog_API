@@ -11,7 +11,20 @@ namespace Blog_API.Context
 
         }
 
+        // configure relationship between blogpost and user
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<BlogPostModel>()
+                .HasOne(s => s.User)
+                .WithMany(t => t.BlogPosts)
+                .HasForeignKey(t => t.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
+
         public DbSet<BlogPostModel> BlogPostTable { get; set; }
         public DbSet<UserModel> UserTable { get; set; }
+        public DbSet<BlackListTokensModel> BlackListToken { get; set; }
     }
 }

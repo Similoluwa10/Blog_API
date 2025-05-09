@@ -21,3 +21,9 @@ UserBlogs
 
 OtherBlogs
 
+
+Questions: 
+Was it compulsory to configure relationship in dbcontext?
+Is it the model with many that is to be used to create the relationship in modelBuilder.Entity
+
+
